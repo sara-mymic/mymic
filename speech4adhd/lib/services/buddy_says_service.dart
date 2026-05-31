@@ -79,11 +79,21 @@ Your job is to REPEAT what they said — not to rewrite, improve, or summarize.
         );
       }
       return _cleanOutput(text);
+    } on GenerativeAISdkException {
+      throw BuddySaysException(
+        "Buddy couldn't quite catch that. Try recording again and speak a bit closer to the mic.",
+      );
     } on GenerativeAIException catch (e) {
       throw BuddySaysException('Buddy had a problem: ${e.message}');
     } catch (e) {
+      final msg = e.toString();
+      if (msg.contains('Unhandled format for Content')) {
+        throw BuddySaysException(
+          "Buddy couldn't quite catch that. Try recording again and speak a bit closer to the mic.",
+        );
+      }
       throw BuddySaysException(
-        'Could not reach Buddy. Check the internet and try again. ($e)',
+        'Could not reach Buddy. Check the internet and try again.',
       );
     }
   }

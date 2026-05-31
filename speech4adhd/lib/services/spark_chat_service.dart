@@ -57,10 +57,16 @@ class SparkChatService {
         return "Hmm, I got a little mixed up — tell me that again? 😊";
       }
       return text;
+    } on GenerativeAISdkException {
+      return "Hmm, I got a little mixed up — tell me that again? 😊";
     } on GenerativeAIException catch (e) {
       throw SparkChatException('Buddy had a problem: ${e.message}');
     } catch (e) {
-      throw SparkChatException('Could not reach Buddy. Check the internet and try again! ($e)');
+      final msg = e.toString();
+      if (msg.contains('Unhandled format for Content')) {
+        return "Hmm, I got a little mixed up — tell me that again? 😊";
+      }
+      throw SparkChatException('Could not reach Buddy. Check the internet and try again!');
     }
   }
 }

@@ -129,6 +129,8 @@ Now write Buddy’s reply only — no bullet numbers in the answer, just Buddy�
       return t;
     } on SocketException {
       throw DebateSparkException(_offlineMsg);
+    } on GenerativeAISdkException {
+      return "Wow, I can tell you care about this! Let’s try that one more time — say it again in your own words. 🦊";
     } on GenerativeAIException catch (e) {
       if (_looksLikeNetworkIssue(e.message)) {
         throw DebateSparkException(_offlineMsg);
@@ -139,10 +141,13 @@ Now write Buddy’s reply only — no bullet numbers in the answer, just Buddy�
         throw DebateSparkException(_offlineMsg);
       }
       final s = e.toString();
+      if (s.contains('Unhandled format for Content')) {
+        return "Wow, I can tell you care about this! Let’s try that one more time — say it again in your own words. 🦊";
+      }
       if (_looksLikeNetworkIssue(s)) {
         throw DebateSparkException(_offlineMsg);
       }
-      throw DebateSparkException('Buddy had a little hiccup. Try again in a moment! ($e)');
+      throw DebateSparkException('Buddy had a little hiccup. Try again in a moment!');
     }
   }
 }
