@@ -1,6 +1,12 @@
 # API keys (copy from .env.example)
 .env
 
+# Android signing — NEVER commit these
+/android/key.properties
+key.properties
+*.jks
+*.keystore
+
 # Miscellaneous
 *.class
 *.log
