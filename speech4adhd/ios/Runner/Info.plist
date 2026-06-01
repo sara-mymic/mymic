@@ -6,6 +6,8 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>myMic uses the microphone so you can talk to Spark, record practice, and use debates. Audio is used on your device and for speech features you choose.</string>
 	<key>CFBundleDisplayName</key>
